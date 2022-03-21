@@ -29,7 +29,7 @@ func GetItem(itemName string, itemPrice float64, itemQuantity int, itemType int)
 	return item
 }
 
-func GetItemType(item Item) string {
+func (item Item) GetItemType() string {
 	switch item.Types {
 	case utils.RAW:
 		return "Raw Item"

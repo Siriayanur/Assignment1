@@ -11,11 +11,8 @@ import (
 func main() {
 
 	items := []itemData.Item{}
-	condition := true
 
-	// correctType := false
-
-	for condition {
+	for {
 		var itemName string
 		var itemPrice float64
 		var itemQuantity int
@@ -40,6 +37,7 @@ func main() {
 		}
 
 		item := itemData.GetItem(itemName, itemPrice, itemQuantity, itemType)
+
 		controller.CalculateFinalPrice(&item)
 		items = append(items, item)
 
@@ -53,6 +51,6 @@ func main() {
 
 	//Items details
 	for i := 0; i < len(items); i++ {
-		fmt.Printf("Item : %d | Name : %s | Sales Tax/item : %.4f | Final Prize : %.4f\n", i+1, items[i].Name, items[i].SalesTax, items[i].FinalPrice)
+		fmt.Printf("Item : %d | Name : %s | Type : %s | Sales Tax/item : %.4f | Final Prize : %.4f\n", i+1, items[i].Name, items[i].GetItemType(), items[i].SalesTax, items[i].FinalPrice)
 	}
 }
