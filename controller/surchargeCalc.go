@@ -4,7 +4,6 @@ import "github.com/Siriayanur/Nuclei_Assignments/utils"
 
 type TaxCalc interface {
 	CalculateSurcharge(float64) float64
-	getTax(int, float64) float64
 }
 
 func CalculateSurcharge(amount float64) float64 {
