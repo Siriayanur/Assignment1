@@ -1,10 +1,8 @@
 package controller
 
-import "github.com/Siriayanur/Nuclei_Assignments/utils"
-
-type TaxCalc interface {
-	CalculateSurcharge(float64) float64
-}
+import (
+	"github.com/Siriayanur/Nuclei_Assignments/utils"
+)
 
 func CalculateSurcharge(amount float64) float64 {
 
