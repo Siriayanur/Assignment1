@@ -1,6 +1,6 @@
 package utils
 
-const ITEM_NAME string = "New Item"
+const ITEM_NAME string = "Item"
 const ITEM_QUANTITY string = "1"
 const ITEM_PRICE string = "10.0"
 const SALES_TAX float64 = 0.0

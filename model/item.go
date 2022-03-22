@@ -1,8 +1,6 @@
 package model
 
 import (
-	"regexp"
-
 	"github.com/Siriayanur/Nuclei_Assignments/utils"
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
@@ -20,11 +18,11 @@ type Item struct {
 
 func (item Item) GetItemType() string {
 	switch item.Types {
-	case utils.RAW:
+	case 1:
 		return "Raw Item"
-	case utils.IMPORTED:
+	case 2:
 		return "Imported Item"
-	case utils.MANUFACTURED:
+	case 3:
 		return "Manufactured Item"
 	default:
 		return ""
@@ -43,7 +41,8 @@ func GetItem(itemName string, itemPrice string, itemQuantity string, itemType in
 		itemQuantity = utils.ITEM_QUANTITY
 	}
 
-	item := Item{itemName, itemPrice, itemQuantity, itemType, utils.SALES_TAX, utils.FINAL_PRICE, ""}
+	//Pass itemType+1 to let the validation function take 0 as valid input for Item.Types
+	item := Item{itemName, itemPrice, itemQuantity, itemType + 1, utils.SALES_TAX, utils.FINAL_PRICE, ""}
 	err := item.ValidateItem()
 
 	//Check if validation error
@@ -56,9 +55,9 @@ func GetItem(itemName string, itemPrice string, itemQuantity string, itemType in
 func (item Item) ValidateItem() error {
 
 	return validation.ValidateStruct(&item,
-		validation.Field(&item.Name, validation.Required, validation.Match(regexp.MustCompile("^[A-Za-z0-9_]*$"))),
+		validation.Field(&item.Name, validation.Required, is.Alphanumeric),
 		validation.Field(&item.Price, validation.Required, is.Float),
 		validation.Field(&item.Quantity, validation.Required, is.Digit),
-		validation.Field(&item.Types, validation.Required, validation.In(0, 1, 2)),
+		validation.Field(&item.Types, validation.Required, validation.In(1, 2, 3)),
 	)
 }
