@@ -18,12 +18,12 @@ type Item struct {
 
 func (item Item) GetItemType() string {
 	switch item.Types {
-	case 1:
+	case utils.RAW:
 		return "Raw Item"
-	case 2:
-		return "Imported Item"
-	case 3:
+	case utils.MANUFACTURED:
 		return "Manufactured Item"
+	case utils.IMPORTED:
+		return "Imported Item"
 	default:
 		return ""
 	}
