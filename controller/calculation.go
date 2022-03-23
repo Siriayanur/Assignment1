@@ -34,12 +34,12 @@ func getTax(itemType int, itemPrice float64) float64 {
 		tax = utils.BASE_TAX*itemPrice + (0.02 * (itemPrice + utils.BASE_TAX*itemPrice))
 	case utils.MANUFACTURED:
 		tax = utils.IMPORT_DUTY * itemPrice
-		tax = tax + CalculateSurcharge(tax)
+		tax = tax + calculateSurcharge(tax)
 	}
 	return tax
 }
 
-func CalculateSurcharge(amount float64) float64 {
+func calculateSurcharge(amount float64) float64 {
 
 	if amount <= 100 {
 		return utils.SURCHARGE_LEVEL1
