@@ -15,7 +15,7 @@ func main() {
 		var itemName string
 		var itemPrice string
 		var itemQuantity string
-		var itemType int
+		var itemType string
 		stop := "y"
 
 		fmt.Print("Item name : ")
@@ -25,12 +25,12 @@ func main() {
 		fmt.Print("Item Quantity : ")
 		fmt.Scanln(&itemQuantity)
 
-		fmt.Print("Item Type | 0 - Raw, 1 - Manufactured, 2 - Imported | : ")
+		fmt.Print("Item Type | 1 - Raw, 2 - Manufactured, 3 - Imported | : ")
 		fmt.Scanln(&itemType)
 
 		item := model.GetItem(itemName, itemPrice, itemQuantity, itemType)
 		if item.Error != "" {
-			fmt.Println("Error : \n", item.Error)
+			fmt.Println("| Error : |\n\n", item.Error)
 			return
 		}
 		//Calculation of Tax and Final Price
@@ -40,7 +40,7 @@ func main() {
 
 		fmt.Println("Got some more items ? y/n")
 		fmt.Scanln(&stop)
-		if stop == "n" {
+		if stop != "y" && stop != "yes" {
 			break
 		}
 	}

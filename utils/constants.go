@@ -1,8 +1,8 @@
 package utils
 
 const ITEM_NAME string = "Item"
-const ITEM_QUANTITY string = "1"
-const ITEM_PRICE string = "10.0"
+const ITEM_QUANTITY int = 1
+const ITEM_PRICE float64 = 10.0
 const SALES_TAX float64 = 0.0
 const FINAL_PRICE float64 = 0.0
 const BASE_TAX = 0.125
