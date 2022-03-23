@@ -1,15 +1,15 @@
 package model
 
 import (
+	"strconv"
+
 	"github.com/Siriayanur/Nuclei_Assignments/utils"
-	validation "github.com/go-ozzo/ozzo-validation"
-	"github.com/go-ozzo/ozzo-validation/is"
 )
 
 type Item struct {
 	Name       string
-	Price      string
-	Quantity   string
+	Price      float64
+	Quantity   int
 	Types      int
 	SalesTax   float64
 	FinalPrice float64
@@ -17,47 +17,32 @@ type Item struct {
 }
 
 func (item Item) GetItemType() string {
-	switch item.Types {
-	case utils.RAW:
-		return "Raw Item"
-	case utils.MANUFACTURED:
-		return "Manufactured Item"
-	case utils.IMPORTED:
-		return "Imported Item"
-	default:
-		return ""
-	}
+	return "Item Type : " + strconv.Itoa(item.Types)
 }
 
-func GetItem(itemName string, itemPrice string, itemQuantity string, itemType int) Item {
+func GetItem(itemName string, itemPrice string, itemQuantity string, itemType string) Item {
 
-	if itemName == "" {
-		itemName = utils.ITEM_NAME
+	var itemErrors = ""
+
+	itemNameError, validItemName := validateItemName(itemName)
+	itemPriceError, validItemPrice := validateItemPrice(itemPrice)
+	itemQuantityError, validItemQuantity := validateItemQuantity(itemQuantity)
+	itemTypeError, validItemType := validateItemType(itemType)
+
+	if itemNameError != nil {
+		itemErrors += itemNameError.Error()
 	}
-	if itemPrice == "" {
-		itemPrice = utils.ITEM_PRICE
+	if itemPriceError != nil {
+		itemErrors += itemPriceError.Error()
 	}
-	if itemQuantity == "" {
-		itemQuantity = utils.ITEM_QUANTITY
+	if itemQuantityError != nil {
+		itemErrors += itemQuantityError.Error()
+	}
+	if itemTypeError != nil {
+		itemErrors += itemTypeError.Error()
 	}
 
-	//Pass itemType+1 to let the validation function take 0 as valid input for Item.Types
-	item := Item{itemName, itemPrice, itemQuantity, itemType + 1, utils.SALES_TAX, utils.FINAL_PRICE, ""}
-	err := item.ValidateItem()
+	item := Item{validItemName, validItemPrice, validItemQuantity, validItemType - 1, utils.SALES_TAX, utils.FINAL_PRICE, itemErrors}
 
-	//Check if validation error
-	if err != nil {
-		item.Error = err.Error()
-	}
 	return item
-}
-
-func (item Item) ValidateItem() error {
-
-	return validation.ValidateStruct(&item,
-		validation.Field(&item.Name, validation.Required, is.Alphanumeric),
-		validation.Field(&item.Price, validation.Required, is.Float),
-		validation.Field(&item.Quantity, validation.Required, is.Digit),
-		validation.Field(&item.Types, validation.Required, validation.In(1, 2, 3)),
-	)
 }
