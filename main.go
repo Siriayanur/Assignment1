@@ -28,10 +28,12 @@ func main() {
 		fmt.Print("Item Type | 1 - Raw, 2 - Manufactured, 3 - Imported | : ")
 		fmt.Scanln(&itemType)
 
-		item := model.GetItem(itemName, itemPrice, itemQuantity, itemType)
-		if item.Error != "" {
-			fmt.Println("| Error : |\n\n", item.Error)
-			return
+		item, itemErrors := model.GetItem(itemName, itemPrice, itemQuantity, itemType)
+		if itemErrors != "" {
+			item.FinalPrice = 0.0
+			item.SalesTax = 0.0
+			item.Price = 0.0
+			fmt.Println("| Error : |\n\n", itemErrors)
 		}
 		//Calculation of Tax and Final Price
 		controller.CalculateFinalPrice(&item)

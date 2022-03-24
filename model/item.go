@@ -13,21 +13,20 @@ type Item struct {
 	Types      int
 	SalesTax   float64
 	FinalPrice float64
-	Error      string
 }
 
 func (item Item) GetItemType() string {
 	return "Item Type : " + strconv.Itoa(item.Types)
 }
 
-func GetItem(itemName string, itemPrice string, itemQuantity string, itemType string) Item {
+func GetItem(itemName string, itemPrice string, itemQuantity string, itemType string) (Item, string) {
 
 	var itemErrors = ""
 
-	itemNameError, validItemName := validateItemName(itemName)
-	itemPriceError, validItemPrice := validateItemPrice(itemPrice)
-	itemQuantityError, validItemQuantity := validateItemQuantity(itemQuantity)
-	itemTypeError, validItemType := validateItemType(itemType)
+	validItemName, itemNameError := validateItemName(itemName)
+	validItemPrice, itemPriceError := validateItemPrice(itemPrice)
+	validItemQuantity, itemQuantityError := validateItemQuantity(itemQuantity)
+	validItemType, itemTypeError := validateItemType(itemType)
 
 	if itemNameError != nil {
 		itemErrors += itemNameError.Error()
@@ -42,7 +41,7 @@ func GetItem(itemName string, itemPrice string, itemQuantity string, itemType st
 		itemErrors += itemTypeError.Error()
 	}
 
-	item := Item{validItemName, validItemPrice, validItemQuantity, validItemType - 1, utils.SALES_TAX, utils.FINAL_PRICE, itemErrors}
+	item := Item{validItemName, validItemPrice, validItemQuantity, validItemType - 1, utils.SALES_TAX, utils.FINAL_PRICE}
 
-	return item
+	return item, itemErrors
 }

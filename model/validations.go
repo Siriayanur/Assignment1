@@ -8,61 +8,61 @@ import (
 	"github.com/Siriayanur/Nuclei_Assignments/utils"
 )
 
-func validateItemName(itemName string) (error, string) {
+func validateItemName(itemName string) (string, error) {
 	//Default itemName if blank
 	if itemName == "" {
-		return nil, utils.ITEM_NAME
+		return utils.ITEM_NAME, nil
 	}
 	validName, _ := regexp.MatchString("^[a-zA-Z0-9_]*$", itemName)
 	if validName {
-		return nil, itemName
+		return itemName, nil
 	}
-	return errors.New("Item Name should contain only Alphabets,Digits and Underscore\n"), itemName
+	return itemName, errors.New("Item Name should contain only Alphabets,Digits and Underscore\n")
 }
 
-func validateItemPrice(itemPrice string) (error, float64) {
+func validateItemPrice(itemPrice string) (float64, error) {
 	//Default itemPrice if blank
 	if itemPrice == "" {
-		return nil, utils.ITEM_PRICE
+		return utils.ITEM_PRICE, nil
 	}
 	//Check positive float
 	validFloat, _ := regexp.MatchString("^[^-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$", itemPrice)
 	if validFloat {
 		validPrice, err := strconv.ParseFloat(itemPrice, 64)
-		return err, validPrice
+		return validPrice, err
 	} else {
-		return errors.New("Item Price should be a positive floating point number\n"), utils.ITEM_PRICE
+		return utils.ITEM_PRICE, errors.New("Item Price should be a positive floating point number\n")
 	}
 }
 
-func validateItemQuantity(itemQuantity string) (error, int) {
+func validateItemQuantity(itemQuantity string) (int, error) {
 	// Check blank
 	if itemQuantity == "" {
-		return nil, utils.ITEM_QUANTITY
+		return utils.ITEM_QUANTITY, nil
 	}
 
 	//Check positive integer
 	validInt, _ := regexp.MatchString(`^0*[1-9]\d*$`, itemQuantity)
 	if validInt {
 		validQuantity, err := strconv.Atoi(itemQuantity)
-		return err, validQuantity
+		return validQuantity, err
 	} else {
-		return errors.New("Item Quantity should be a positive integer\n"), utils.ITEM_QUANTITY
+		return utils.ITEM_QUANTITY, errors.New("Item Quantity should be a positive integer\n")
 	}
 }
 
-func validateItemType(itemType string) (error, int) {
+func validateItemType(itemType string) (int, error) {
 	//check blank
 	if itemType == "" {
-		return errors.New("Item Type cannot be blank"), -1
+		return 0, errors.New("Item Type cannot be blank")
 	}
 
 	//check
 	validType, _ := regexp.MatchString(`^[123]$`, itemType)
 	if validType {
 		validItemType, err := strconv.Atoi(itemType)
-		return err, validItemType
+		return validItemType, err
 	} else {
-		return errors.New("Item Type should be one of these : 1/2/3\n"), -1
+		return 0, errors.New("Item Type should be one of these : 1/2/3\n")
 	}
 }

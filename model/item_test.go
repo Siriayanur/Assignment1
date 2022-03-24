@@ -1,102 +1,78 @@
 package model
 
 import (
-	"fmt"
 	"log"
 	"testing"
 )
 
-func TestItemNameHappyFlow(t *testing.T) {
+func TestItemName(t *testing.T) {
+	log.Println("Item Name Check")
 
-	fmt.Println("HAPPY FLOW - Item Name")
-
-	itemNames := []string{"HeLlO", "PEN", "pencil", "_HAT_", "App12", "1200", ""}
+	itemNames := []string{
+		"HeLlO",
+		"PEN",
+		"1234",
+		"_HAT_",
+		"",
+		"hi@12",
+		"$$@",
+		"--",
+		"he/<>1"}
 
 	for _, name := range itemNames {
-		validName, nameError := validateItemName(name)
-		log.Println(validName, nameError)
+		_, nameError := validateItemName(name)
+		if nameError != nil {
+			t.Errorf("Expected alphanumeric characters and underscore only, got : %s", name)
+		}
+
 	}
 
 }
 
-func TestItemNameBadFlow(t *testing.T) {
-
-	fmt.Println("BAD FLOW - Item Name")
-
-	itemName := "hi@12"
-	validName, nameError := validateItemName(itemName)
-
-	log.Println(validName, nameError)
-
-	itemName = "$$@"
-	validName, nameError = validateItemName(itemName)
-	log.Println(validName, nameError)
-
-}
-
-func TestItemPriceHappyFlow(t *testing.T) {
-
-	fmt.Println("HAPPY FLOW - Item Price")
-
-	itemPrices := []string{"120.00", "120", "34.333", "."}
+func TestItemPrice(t *testing.T) {
+	log.Println("Item Price Check")
+	itemPrices := []string{
+		"120.00",
+		"120",
+		"34.333",
+		".",
+		"uhmm",
+		"120.abc",
+		"-34.333",
+		"-90",
+		"@#"}
 
 	for _, price := range itemPrices {
-		validPrice, priceError := validateItemPrice(price)
-		log.Println(validPrice, priceError)
+		_, priceError := validateItemPrice(price)
+		if priceError != nil {
+			t.Errorf("Expected positive float number only, got : %s", price)
+		}
 	}
 
 }
 
-func TestItemPriceBadFlow(t *testing.T) {
-	fmt.Println("BAD FLOW - Item Price")
+func TestItemQuantity(t *testing.T) {
+	log.Println("Item Quantity Check")
 
-	itemPrices := []string{"uhmm", "120.abc", "-34.333", "-90", "@#"}
+	itemQuantity := []string{"0", "100", "13", "we", "-100", "13.45", "-56.5"}
 
-	for _, price := range itemPrices {
-		validPrice, priceError := validateItemPrice(price)
-		log.Println(validPrice, priceError)
+	for _, quantity := range itemQuantity {
+		_, quantityError := validateItemPrice(quantity)
+		if quantityError != nil {
+			t.Errorf("Expected positive integer number only, got : %s", quantity)
+		}
 	}
 }
 
-func TestItemQuantityHappyFlow(t *testing.T) {
-	fmt.Println("HAPPY FLOW - Item Quantity")
+func TestItemType(t *testing.T) {
+	log.Println("Item Type Check")
 
-	itemQuantity := []string{"0", "100", "13"}
-
-	for _, price := range itemQuantity {
-		validQuantity, quantityError := validateItemQuantity(price)
-		log.Println(validQuantity, quantityError)
-	}
-}
-
-func TestItemQuantityBadFlow(t *testing.T) {
-	fmt.Println("BAD FLOW - Item Quantity")
-
-	itemQuantity := []string{"we", "-100", "13.45"}
-
-	for _, price := range itemQuantity {
-		validQuantity, quantityError := validateItemQuantity(price)
-		log.Println(validQuantity, quantityError)
-	}
-}
-
-func TestItemTypeHappyFlow(t *testing.T) {
-	fmt.Println("HAPPY FLOW - Item Type")
-
-	itemType := []string{"3", "1", "2"}
+	itemType := []string{"3", "1", "2", "-3", "4", "hi", "$#", "7.9", "0"}
 
 	for _, types := range itemType {
-		validQuantity, quantityError := validateItemType(types)
-		log.Println(validQuantity, quantityError)
-	}
-}
-func TestItemTypeBadFlow(t *testing.T) {
-	fmt.Println("BAD FLOW - Item Type")
-
-	itemType := []string{"-3", "4", "hi", "$#"}
-
-	for _, types := range itemType {
-		validQuantity, quantityError := validateItemType(types)
-		log.Println(validQuantity, quantityError)
+		_, typesError := validateItemPrice(types)
+		if typesError != nil {
+			t.Errorf("Expected 1, 2 or 3 only, got : %s", types)
+		}
 	}
 }
