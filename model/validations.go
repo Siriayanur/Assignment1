@@ -42,7 +42,7 @@ func validateItemQuantity(itemQuantity string) (int, error) {
 	}
 
 	//Check positive integer
-	validInt, _ := regexp.MatchString(`^0*[1-9]\d*$`, itemQuantity)
+	validInt, _ := regexp.MatchString(`^\d*$`, itemQuantity)
 	if validInt {
 		validQuantity, err := strconv.Atoi(itemQuantity)
 		return validQuantity, err
