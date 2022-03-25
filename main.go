@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-
 	items := []model.Item{}
 
 	for {
@@ -35,7 +34,7 @@ func main() {
 			item.Price = 0.0
 			fmt.Println("| Error : |\n\n", itemErrors)
 		}
-		//Calculation of Tax and Final Price
+		// Calculation of Tax and Final Price
 		controller.CalculateFinalPrice(&item)
 
 		items = append(items, item)
@@ -49,6 +48,6 @@ func main() {
 	fmt.Println("| Your order |")
 
 	for i := 0; i < len(items); i++ {
-		fmt.Printf("Item : %d | Name : %s | Type : %s | Sales Tax/item : %.4f | Final Prize : %.4f\n", i+1, items[i].Name, items[i].GetItemType(), items[i].SalesTax, items[i].FinalPrice)
+		fmt.Printf("Item : %d | Name : %s | Type : %s | Sales Tax/item : %.2f | Final Prize : %.2f\n", i+1, items[i].Name, items[i].GetItemType(), items[i].SalesTax, items[i].FinalPrice)
 	}
 }

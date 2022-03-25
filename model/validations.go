@@ -1,68 +1,61 @@
 package model
 
 import (
-	"errors"
 	"regexp"
 	"strconv"
 
+	"github.com/Siriayanur/Nuclei_Assignments/exceptions"
 	"github.com/Siriayanur/Nuclei_Assignments/utils"
 )
 
 func validateItemName(itemName string) (string, error) {
-	//Default itemName if blank
+	// Default itemName if blank
 	if itemName == "" {
-		return utils.ITEM_NAME, nil
+		return utils.DefaultItemName, nil
 	}
 	validName, _ := regexp.MatchString("^[a-zA-Z0-9_]*$", itemName)
 	if validName {
 		return itemName, nil
 	}
-	return itemName, errors.New("Item Name should contain only Alphabets,Digits and Underscore\n")
+	return itemName, exceptions.InvalidItemParameter("itemName", exceptions.ErrMap["itemName"])
 }
 
 func validateItemPrice(itemPrice string) (float64, error) {
-	//Default itemPrice if blank
+	// Default itemPrice if blank
 	if itemPrice == "" {
-		return utils.ITEM_PRICE, nil
+		return utils.DefaultItemPrice, nil
 	}
-	//Check positive float
+	// Check positive float
 	validFloat, _ := regexp.MatchString("^[^-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$", itemPrice)
 	if validFloat {
 		validPrice, err := strconv.ParseFloat(itemPrice, 64)
-		return validPrice, err
-	} else {
-		return utils.ITEM_PRICE, errors.New("Item Price should be a positive floating point number\n")
+		return utils.RoundFloat(validPrice), err
 	}
+	return utils.DefaultItemPrice, exceptions.InvalidItemParameter("itemPrice", exceptions.ErrMap["itemPrice"])
 }
 
 func validateItemQuantity(itemQuantity string) (int, error) {
 	// Check blank
 	if itemQuantity == "" {
-		return utils.ITEM_QUANTITY, nil
+		return utils.DefaultItemQuantity, nil
 	}
-
-	//Check positive integer
+	// Check positive integer
 	validInt, _ := regexp.MatchString(`^\d*$`, itemQuantity)
 	if validInt {
 		validQuantity, err := strconv.Atoi(itemQuantity)
 		return validQuantity, err
-	} else {
-		return utils.ITEM_QUANTITY, errors.New("Item Quantity should be a positive integer\n")
 	}
+	return utils.DefaultItemQuantity, exceptions.InvalidItemParameter("itemQuantity", exceptions.ErrMap["itemQuantity"])
 }
 
 func validateItemType(itemType string) (int, error) {
-	//check blank
-	if itemType == "" {
-		return 0, errors.New("Item Type cannot be blank")
+	if itemType != "" {
+		// Check if it is in the specified range
+		validType, _ := regexp.MatchString(`^[123]$`, itemType)
+		if validType {
+			validItemType, err := strconv.Atoi(itemType)
+			return validItemType, err
+		}
 	}
-
-	//check
-	validType, _ := regexp.MatchString(`^[123]$`, itemType)
-	if validType {
-		validItemType, err := strconv.Atoi(itemType)
-		return validItemType, err
-	} else {
-		return 0, errors.New("Item Type should be one of these : 1/2/3\n")
-	}
+	return 0, exceptions.InvalidItemParameter("itemType", exceptions.ErrMap["itemType"])
 }

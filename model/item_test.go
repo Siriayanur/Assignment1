@@ -5,77 +5,43 @@ import (
 )
 
 func TestItemNameValidCases(t *testing.T) {
-	itemNames := []string{
-		"HeLlO",
-		"PEN",
-		"1234",
-		"_HAT_",
-		"",
-	}
-
+	itemNames := []string{"HeLlO", "PEN", "1234", "_HAT_", ""}
 	for _, name := range itemNames {
 		_, nameError := validateItemName(name)
 		if nameError != nil {
 			t.Errorf("Expected alphanumeric characters and underscore only, got : %s", name)
 		}
-
 	}
-
 }
 func TestItemNameInvalidCases(t *testing.T) {
-
-	itemNames := []string{
-		"hi@12",
-		"$$@",
-		"--",
-		"he/<>1"}
-
+	itemNames := []string{"hi@12", "$$@", "--", "he/<>1"}
 	for _, name := range itemNames {
 		_, nameError := validateItemName(name)
 		if nameError == nil {
 			t.Errorf("Expected alphanumeric characters and underscore only, got : %s", name)
 		}
-
 	}
-
 }
-
 func TestItemPriceValidCases(t *testing.T) {
-	itemPrices := []string{
-		"120.00",
-		"120",
-		"34.333",
-	}
-
+	itemPrices := []string{"120.00", "120", "34.333"}
 	for _, price := range itemPrices {
 		_, priceError := validateItemPrice(price)
 		if priceError != nil {
 			t.Errorf("Expected positive float number only, got : %s", price)
 		}
 	}
-
 }
 func TestItemPriceInvalidCases(t *testing.T) {
-	itemPrices := []string{
-		".",
-		"uhmm",
-		"120.abc",
-		"-34.333",
-		"-90",
-		"@#"}
-
+	itemPrices := []string{".", "uhmm", "120.abc", "-34.333", "-90", "@#"}
 	for _, price := range itemPrices {
 		_, priceError := validateItemPrice(price)
 		if priceError == nil {
 			t.Errorf("Expected positive float number only, got : %s", price)
 		}
 	}
-
 }
 func TestItemQuantityValidCases(t *testing.T) {
-
 	itemQuantity := []string{"0", "100", "13"}
-
 	for _, quantity := range itemQuantity {
 		_, quantityError := validateItemQuantity(quantity)
 		if quantityError != nil {
@@ -84,9 +50,7 @@ func TestItemQuantityValidCases(t *testing.T) {
 	}
 }
 func TestItemQuantityInvalidCases(t *testing.T) {
-
 	itemQuantity := []string{"we", "-100", "13.45", "-56.5"}
-
 	for _, quantity := range itemQuantity {
 		_, quantityError := validateItemQuantity(quantity)
 		if quantityError == nil {
@@ -96,7 +60,6 @@ func TestItemQuantityInvalidCases(t *testing.T) {
 }
 func TestItemTypeValidCases(t *testing.T) {
 	itemType := []string{"3", "1", "2"}
-
 	for _, types := range itemType {
 		_, typesError := validateItemType(types)
 		if typesError != nil {
@@ -106,7 +69,6 @@ func TestItemTypeValidCases(t *testing.T) {
 }
 func TestItemTypeInvalidCases(t *testing.T) {
 	itemType := []string{"-3", "4", "hi", "$#", "7.9", "0"}
-
 	for _, types := range itemType {
 		_, typesError := validateItemType(types)
 		if typesError == nil {
@@ -114,7 +76,6 @@ func TestItemTypeInvalidCases(t *testing.T) {
 		}
 	}
 }
-
 func TestGetItemValidCases(t *testing.T) {
 	items := []struct {
 		Name     string
@@ -133,7 +94,6 @@ func TestGetItemValidCases(t *testing.T) {
 			t.Errorf("Incorrect Item parameters : %s", err)
 		}
 	}
-
 }
 func TestGetItemInvalidCases(t *testing.T) {
 	items := []struct {
@@ -154,5 +114,4 @@ func TestGetItemInvalidCases(t *testing.T) {
 			t.Errorf("Incorrect Item parameters : %s", err)
 		}
 	}
-
 }

@@ -7,11 +7,9 @@ import (
 
 func CalculateFinalPrice(item *model.Item) {
 	mrp := 0.0
-
-	item.SalesTax = getTax(item.Types, item.Price)
+	item.SalesTax = utils.RoundFloat(getTax(item.Types, item.Price))
 	mrp = float64(item.Quantity) * (item.Price + item.SalesTax)
-
-	item.FinalPrice = mrp
+	item.FinalPrice = utils.RoundFloat(mrp)
 }
 
 func getTax(itemType int, itemPrice float64) float64 {
@@ -19,24 +17,22 @@ func getTax(itemType int, itemPrice float64) float64 {
 
 	switch itemType {
 	case utils.RAW:
-		tax = utils.BASE_TAX * itemPrice
+		tax = utils.BaseTax * itemPrice
 	case utils.IMPORTED:
-		tax = utils.BASE_TAX*itemPrice + (0.02 * (itemPrice + utils.BASE_TAX*itemPrice))
+		tax = utils.BaseTax*itemPrice + (0.02 * (itemPrice + utils.BaseTax*itemPrice))
 	case utils.MANUFACTURED:
-		tax = utils.IMPORT_DUTY * itemPrice
+		tax = utils.ImportDuty * itemPrice
 		tax = tax + calculateSurcharge(tax, itemPrice)
 	}
 	return tax
 }
 
 func calculateSurcharge(amount float64, itemPrice float64) float64 {
-
 	if amount <= 100 {
-		return utils.SURCHARGE_LEVEL1
+		return utils.SurchargeLevel1
 	} else if amount <= 200 {
-		return utils.SURCHARGE_LEVEL2
+		return utils.SurchargeLevel2
 	} else {
-		return utils.SURCHARGE_LEVEL3 * (itemPrice + (itemPrice * utils.IMPORT_DUTY))
+		return utils.SurchargeLevel3 * (itemPrice + (itemPrice * utils.ImportDuty))
 	}
-
 }

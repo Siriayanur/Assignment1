@@ -3,6 +3,7 @@ package model
 import (
 	"strconv"
 
+	"github.com/Siriayanur/Nuclei_Assignments/exceptions"
 	"github.com/Siriayanur/Nuclei_Assignments/utils"
 )
 
@@ -16,32 +17,32 @@ type Item struct {
 }
 
 func (item Item) GetItemType() string {
-	return "Item Type : " + strconv.Itoa(item.Types)
+	return "Item Type : " + strconv.Itoa(item.Types+1)
 }
 
 func GetItem(itemName string, itemPrice string, itemQuantity string, itemType string) (Item, string) {
-
-	var itemErrors = ""
-
+	exceptions.CreateErrorStatementsForItemParameters()
 	validItemName, itemNameError := validateItemName(itemName)
-	validItemPrice, itemPriceError := validateItemPrice(itemPrice)
-	validItemQuantity, itemQuantityError := validateItemQuantity(itemQuantity)
-	validItemType, itemTypeError := validateItemType(itemType)
-
 	if itemNameError != nil {
-		itemErrors += itemNameError.Error()
+		return Item{}, itemNameError.Error()
 	}
+
+	validItemPrice, itemPriceError := validateItemPrice(itemPrice)
 	if itemPriceError != nil {
-		itemErrors += itemPriceError.Error()
+		return Item{}, itemPriceError.Error()
 	}
+
+	validItemQuantity, itemQuantityError := validateItemQuantity(itemQuantity)
 	if itemQuantityError != nil {
-		itemErrors += itemQuantityError.Error()
+		return Item{}, itemQuantityError.Error()
 	}
+
+	validItemType, itemTypeError := validateItemType(itemType)
 	if itemTypeError != nil {
-		itemErrors += itemTypeError.Error()
+		return Item{}, itemTypeError.Error()
 	}
 
-	item := Item{validItemName, validItemPrice, validItemQuantity, validItemType - 1, utils.SALES_TAX, utils.FINAL_PRICE}
+	item := Item{validItemName, validItemPrice, validItemQuantity, validItemType - 1, utils.DefaultSalesTax, utils.DefaultFinalPrice}
 
-	return item, itemErrors
+	return item, ""
 }
