@@ -2,78 +2,64 @@ package model
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestItemNameValidCases(t *testing.T) {
 	itemNames := []string{"HeLlO", "PEN", "1234", "_HAT_", ""}
 	for _, name := range itemNames {
 		_, nameError := validateItemName(name)
-		if nameError != nil {
-			t.Errorf("Expected alphanumeric characters and underscore only, got : %s", name)
-		}
+		require.Nil(t, nameError)
 	}
 }
 func TestItemNameInvalidCases(t *testing.T) {
 	itemNames := []string{"hi@12", "$$@", "--", "he/<>1"}
 	for _, name := range itemNames {
 		_, nameError := validateItemName(name)
-		if nameError == nil {
-			t.Errorf("Expected alphanumeric characters and underscore only, got : %s", name)
-		}
+		require.NotNil(t, nameError)
 	}
 }
 func TestItemPriceValidCases(t *testing.T) {
 	itemPrices := []string{"120.00", "120", "34.333"}
 	for _, price := range itemPrices {
 		_, priceError := validateItemPrice(price)
-		if priceError != nil {
-			t.Errorf("Expected positive float number only, got : %s", price)
-		}
+		require.Nil(t, priceError)
 	}
 }
 func TestItemPriceInvalidCases(t *testing.T) {
 	itemPrices := []string{".", "uhmm", "120.abc", "-34.333", "-90", "@#"}
 	for _, price := range itemPrices {
 		_, priceError := validateItemPrice(price)
-		if priceError == nil {
-			t.Errorf("Expected positive float number only, got : %s", price)
-		}
+		require.NotNil(t, priceError)
 	}
 }
 func TestItemQuantityValidCases(t *testing.T) {
 	itemQuantity := []string{"0", "100", "13"}
 	for _, quantity := range itemQuantity {
 		_, quantityError := validateItemQuantity(quantity)
-		if quantityError != nil {
-			t.Errorf("Expected positive integer number only, got : %s", quantity)
-		}
+		require.Nil(t, quantityError)
 	}
 }
 func TestItemQuantityInvalidCases(t *testing.T) {
 	itemQuantity := []string{"we", "-100", "13.45", "-56.5"}
 	for _, quantity := range itemQuantity {
 		_, quantityError := validateItemQuantity(quantity)
-		if quantityError == nil {
-			t.Errorf("Expected positive integer number only, got : %s", quantity)
-		}
+		require.NotNil(t, quantityError)
 	}
 }
 func TestItemTypeValidCases(t *testing.T) {
 	itemType := []string{"3", "1", "2"}
 	for _, types := range itemType {
 		_, typesError := validateItemType(types)
-		if typesError != nil {
-			t.Errorf("Expected 1, 2 or 3 only, got : %s", types)
-		}
+		require.Nil(t, typesError)
 	}
 }
 func TestItemTypeInvalidCases(t *testing.T) {
 	itemType := []string{"-3", "4", "hi", "$#", "7.9", "0"}
 	for _, types := range itemType {
 		_, typesError := validateItemType(types)
-		if typesError == nil {
-			t.Errorf("Expected 1, 2 or 3 only, got : %s", types)
-		}
+		require.NotNil(t, typesError)
 	}
 }
 func TestGetItemValidCases(t *testing.T) {
@@ -90,9 +76,7 @@ func TestGetItemValidCases(t *testing.T) {
 	}
 	for _, item := range items {
 		_, err := GetItem(item.Name, item.Price, item.Quantity, item.Types)
-		if err != "" {
-			t.Errorf("Incorrect Item parameters : %s", err)
-		}
+		require.Equal(t, "", err)
 	}
 }
 func TestGetItemInvalidCases(t *testing.T) {
@@ -110,8 +94,6 @@ func TestGetItemInvalidCases(t *testing.T) {
 	}
 	for _, item := range items {
 		_, err := GetItem(item.Name, item.Price, item.Quantity, item.Types)
-		if err == "" {
-			t.Errorf("Incorrect Item parameters : %s", err)
-		}
+		require.NotEqual(t, "", err)
 	}
 }
