@@ -3,9 +3,7 @@ package utils
 const (
 	DefaultItemName     string  = "Item"
 	DefaultItemQuantity int     = 1
-	DefaultItemPrice    float64 = 0.0
-	DefaultSalesTax     float64 = 0.0
-	DefaultFinalPrice   float64 = 0.0
+	DefaultPrice        float64 = 0.0
 	BaseTax                     = 0.125
 	ImportDuty                  = 0.01
 	SurchargeLevel1             = 5.0

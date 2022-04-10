@@ -42,7 +42,7 @@ func GetItem(itemName string, itemPrice string, itemQuantity string, itemType st
 		return Item{}, itemTypeError.Error()
 	}
 
-	item := Item{validItemName, validItemPrice, validItemQuantity, validItemType - 1, utils.DefaultSalesTax, utils.DefaultFinalPrice}
+	item := Item{validItemName, validItemPrice, validItemQuantity, validItemType - 1, utils.DefaultPrice, utils.DefaultPrice}
 
 	return item, ""
 }

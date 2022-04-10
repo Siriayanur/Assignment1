@@ -29,10 +29,9 @@ func main() {
 
 		item, itemErrors := model.GetItem(itemName, itemPrice, itemQuantity, itemType)
 		if itemErrors != "" {
-			item.FinalPrice = 0.0
-			item.SalesTax = 0.0
-			item.Price = 0.0
 			fmt.Println("| Error : |\n\n", itemErrors)
+			fmt.Println("| Enter valid inputs |")
+			continue
 		}
 		// Calculation of Tax and Final Price
 		controller.CalculateFinalPrice(&item)

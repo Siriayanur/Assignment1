@@ -23,7 +23,7 @@ func validateItemName(itemName string) (string, error) {
 func validateItemPrice(itemPrice string) (float64, error) {
 	// Default itemPrice if blank
 	if itemPrice == "" {
-		return utils.DefaultItemPrice, nil
+		return utils.DefaultPrice, nil
 	}
 	// Check positive float
 	validFloat, _ := regexp.MatchString("^[^-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$", itemPrice)
@@ -31,7 +31,7 @@ func validateItemPrice(itemPrice string) (float64, error) {
 		validPrice, err := strconv.ParseFloat(itemPrice, 64)
 		return utils.RoundFloat(validPrice), err
 	}
-	return utils.DefaultItemPrice, exceptions.InvalidItemParameter("itemPrice", exceptions.ErrMap["itemPrice"])
+	return utils.DefaultPrice, exceptions.InvalidItemParameter("itemPrice", exceptions.ErrMap["itemPrice"])
 }
 
 func validateItemQuantity(itemQuantity string) (int, error) {
