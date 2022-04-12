@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/Siriayanur/Nuclei_Assignments/controller"
-	"github.com/Siriayanur/Nuclei_Assignments/model"
+	"github.com/Siriayanur/Assignment1/controller"
+	"github.com/Siriayanur/Assignment1/model"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-module github.com/Siriayanur/Nuclei_Assignments
+module github.com/Siriayanur/Assignment1
 
 go 1.17
 

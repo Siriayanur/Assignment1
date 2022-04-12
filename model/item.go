@@ -3,8 +3,8 @@ package model
 import (
 	"strconv"
 
-	"github.com/Siriayanur/Nuclei_Assignments/exceptions"
-	"github.com/Siriayanur/Nuclei_Assignments/utils"
+	"github.com/Siriayanur/Assignment1/exceptions"
+	"github.com/Siriayanur/Assignment1/utils"
 )
 
 type Item struct {

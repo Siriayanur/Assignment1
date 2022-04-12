@@ -4,8 +4,8 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/Siriayanur/Nuclei_Assignments/exceptions"
-	"github.com/Siriayanur/Nuclei_Assignments/utils"
+	"github.com/Siriayanur/Assignment1/exceptions"
+	"github.com/Siriayanur/Assignment1/utils"
 )
 
 func validateItemName(itemName string) (string, error) {
