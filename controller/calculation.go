@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"github.com/Siriayanur/Nuclei_Assignments/model"
-	"github.com/Siriayanur/Nuclei_Assignments/utils"
+	"github.com/Siriayanur/Assignment1/model"
+	"github.com/Siriayanur/Assignment1/utils"
 )
 
 func CalculateFinalPrice(item *model.Item) {

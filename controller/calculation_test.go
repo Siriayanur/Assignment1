@@ -3,7 +3,7 @@ package controller
 import (
 	"testing"
 
-	"github.com/Siriayanur/Nuclei_Assignments/model"
+	"github.com/Siriayanur/Assignment1/model"
 	"github.com/stretchr/testify/require"
 )
 
